@@ -1,0 +1,18 @@
+---
+- hosts: rke2_all
+  remote_user: ubuntu
+  vars_files:
+  - ./vars.yml
+  any_errors_fatal: true
+  tasks:
+
+    - ansible.builtin.include_role:
+        name: common
+
+    - ansible.builtin.include_role:
+        name: rke2-server
+      when: ansible_facts['hostname'] == rke2_server
+
+    - ansible.builtin.include_role:
+        name: rke2-agent
+      when: ansible_facts['hostname'] is match(rke2_agent)

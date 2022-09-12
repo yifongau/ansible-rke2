@@ -1,0 +1,21 @@
+---
+- name: Create config directory
+  become: yes
+  ansible.builtin.file:
+    path: /etc/rancher/rke2/
+    state: directory
+
+- name: Copy server ip to config.yaml
+  become: yes
+  ansible.builtin.lineinfile:
+    dest: /etc/rancher/rke2/config.yaml
+    line: "server: https://{{hostvars['variable_holder']['server_ip']}}:9345"
+    create: yes
+
+- name: Copy node token to config.yaml
+  become: yes
+  ansible.builtin.lineinfile:
+    dest: /etc/rancher/rke2/config.yaml
+    line: "token: {{hostvars['variable_holder']['node_token']}}"
+
+    # TODO: do not add if lines already exist

@@ -1,0 +1,12 @@
+---
+- name: Enable RKE2 agent
+  become: yes
+  ansible.builtin.service:
+    name: rke2-agent
+    enabled: yes
+
+- name: Start RKE2 server
+  become: yes
+  ansible.builtin.service:
+    name: rke2-agent
+    state: started

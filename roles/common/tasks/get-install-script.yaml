@@ -1,0 +1,6 @@
+---
+- name: Get installation script
+  ansible.builtin.get_url:
+    url: "{{install_script_src}}"
+    dest: "{{install_script_dest}}"
+    force: yes

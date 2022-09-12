@@ -1,0 +1,7 @@
+[rke2_servers]
+
+[rke2_agents]
+
+[rke2_all:children]
+rke2_servers
+rke2_agents

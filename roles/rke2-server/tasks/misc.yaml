@@ -1,0 +1,24 @@
+---
+
+- name: Check if /usr/local/bin/kubectl exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubectl
+  register: has_kubectl
+
+- name: Symlink kubectl on host
+  become: yes
+  ansible.builtin.shell: |
+    ln -s $(find /var/lib/rancher/rke2/data/ -name kubectl) /usr/local/bin/kubectl
+  when: not has_kubectl.stat.exists
+
+- name: export $KUBECONFIG on host
+  ansible.builtin.shell: export KUBECONFIG='/etc/rancher/rke2/rke2.yaml'
+
+- name: copy kubectl config to local machine
+  become: yes
+  ansible.builtin.fetch:
+    flat: yes
+    src: /etc/rancher/rke2/rke2.yaml
+    dest: /home/yifongau/.kube/proxmox-rke2.yaml
+    # TODO: change ip address
+

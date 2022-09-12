@@ -1,0 +1,10 @@
+---
+
+- name: Debug message.
+  ansible.builtin.debug:
+    msg: "This is a server. The hostname is: {{ansible_facts['hostname']}}"
+
+- include_tasks: install-rke2-server.yaml
+- include_tasks: start-rke2-server.yaml
+- include_tasks: expose-variables.yaml
+- include_tasks: misc.yaml

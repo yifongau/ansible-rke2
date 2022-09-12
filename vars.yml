@@ -1,0 +1,5 @@
+---
+rke2_server: rancher1
+rke2_agent: rke*
+install_script_src: https://get.rke2.io
+install_script_dest: "{{ansible_env.HOME}}/install-rke2.sh"

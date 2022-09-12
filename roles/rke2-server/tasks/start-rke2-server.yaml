@@ -1,0 +1,13 @@
+---
+- name: Enable RKE2 server
+  become: yes
+  ansible.builtin.service:
+    name: rke2-server
+    enabled: yes
+    
+
+- name: Start RKE2 server
+  become: yes
+  ansible.builtin.service:
+    name: rke2-server
+    state: started  

@@ -1,0 +1,15 @@
+---
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+- debug:
+    msg: rke2-server.service found! 
+  when: ansible_facts.services['rke2-server.service'] is defined
+
+- name: Execute installation script
+  become: yes
+  command: sh "{{install_script_dest}}"
+  environment: 
+    INSTALL_RKE2_TYPE: server
+  when: not ansible_facts.services['rke2-server.service'] is defined
+

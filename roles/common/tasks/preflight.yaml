@@ -1,0 +1,11 @@
+---
+# Preflight check: Inspect hosts and determine which tasks can be skipped through setting variables. 
+
+- name: Expose variables through dummy host
+  become: yes
+  add_host:
+    name: "preflight"
+    variable_1:
+    variable_2:
+
+

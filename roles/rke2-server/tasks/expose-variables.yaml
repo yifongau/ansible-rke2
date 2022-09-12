@@ -1,0 +1,21 @@
+---
+- name: Check if node token exists
+  become: yes
+  ansible.builtin.stat:
+    path: /var/lib/rancher/rke2/server/node-token
+  register: has_node_token
+
+- name: Slurp token into variable
+  become: yes
+  ansible.builtin.slurp:
+    src: /var/lib/rancher/rke2/server/node-token
+  register: node_token
+  when: has_node_token.stat.exists
+
+- name: Expose variables through dummy host
+  become: yes
+  add_host:
+    name: "variable_holder"
+    server_ip: "{{ansible_default_ipv4.address}}"
+    node_token: "{{node_token.content | b64decode | trim}}"
+
